@@ -1,5 +1,6 @@
 use std::cmp::Ordering;
 
+#[derive(Clone, Debug)]
 pub struct OneWay<T>
 where
     T: std::cmp::Ord,
@@ -91,4 +92,34 @@ fn mixture() {
     assert!(1 < 3 && 3 < 5 && 1 < 5);
     assert!(five < one && five < three && three == one);
     assert!(one > five && three == five && one > three);
+}
+
+#[test]
+fn sorting_stability() {
+    let orig = vec![
+        OneWay::new(1u32, Ordering::Equal),
+        OneWay::new(2u32, Ordering::Equal),
+        OneWay::new(3u32, Ordering::Equal),
+        OneWay::new(4u32, Ordering::Equal),
+        OneWay::new(5u32, Ordering::Equal),
+        OneWay::new(6u32, Ordering::Equal),
+    ];
+    let mut after = orig.clone();
+    after.sort();
+    assert_eq!(orig, after);
+}
+
+#[test]
+fn sorting_mixture() {
+    let orig = vec![
+        OneWay::new(1u32, Ordering::Greater),
+        OneWay::new(2u32, Ordering::Greater),
+        OneWay::new(3u32, Ordering::Equal),
+        OneWay::new(4u32, Ordering::Equal),
+        OneWay::new(5u32, Ordering::Less),
+        OneWay::new(6u32, Ordering::Less),
+    ];
+    let mut after = orig.clone();
+    after.sort();
+    assert_ne!(orig, after);
 }
