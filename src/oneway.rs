@@ -106,6 +106,8 @@ fn sorting_stability() {
     ];
     let mut after = orig.clone();
     after.sort();
+    /* NB because this sort is "stable" it necessarily doesn't move any of our supposedly equal
+     * elements */
     assert_eq!(orig, after);
 }
 
@@ -121,5 +123,7 @@ fn sorting_mixture() {
     ];
     let mut after = orig.clone();
     after.sort();
+    /* NB sorting this got us some other order of elements, but that order is implementation
+     * defined */
     assert_ne!(orig, after);
 }
