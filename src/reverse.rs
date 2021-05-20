@@ -1,16 +1,9 @@
-use std::cmp::Ordering;
-
-pub struct Reverse<T>
-where
-    T: std::cmp::Ord,
-{
+#[derive(Clone, Debug)]
+pub struct Reverse<T: Ord> {
     inner: T,
 }
 
-impl<T> Reverse<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T: Ord> Reverse<T> {
     pub fn new(inner: T) -> Reverse<T> {
         Reverse { inner }
     }
@@ -20,19 +13,15 @@ where
     }
 }
 
-impl<T> PartialEq for Reverse<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T: Ord> PartialEq for Reverse<T> {
     fn eq(&self, other: &Self) -> bool {
         self.inner == other.inner
     }
 }
 
-impl<T> Ord for Reverse<T>
-where
-    T: std::cmp::Ord,
-{
+use std::cmp::Ordering;
+
+impl<T: Ord> Ord for Reverse<T> {
     fn cmp(&self, other: &Self) -> Ordering {
         match self.inner.cmp(&other.inner) {
             Ordering::Less => Ordering::Greater,
@@ -42,17 +31,14 @@ where
     }
 }
 
-impl<T> PartialOrd for Reverse<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T: Ord> PartialOrd for Reverse<T> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
 /* Claim without justification that we are Eq */
-impl<T> Eq for Reverse<T> where T: std::cmp::Ord {}
+impl<T: Ord> Eq for Reverse<T> {}
 
 #[cfg(test)]
 #[test]

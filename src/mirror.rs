@@ -1,14 +1,9 @@
-pub struct Mirror<T>
-where
-    T: std::cmp::PartialEq,
-{
+#[derive(Clone, Debug)]
+pub struct Mirror<T: PartialEq> {
     inner: T,
 }
 
-impl<T> Mirror<T>
-where
-    T: std::cmp::PartialEq,
-{
+impl<T: PartialEq> Mirror<T> {
     pub fn new(inner: T) -> Mirror<T> {
         Mirror { inner }
     }
@@ -18,17 +13,14 @@ where
     }
 }
 
-impl<T> PartialEq for Mirror<T>
-where
-    T: std::cmp::PartialEq,
-{
+impl<T: PartialEq> PartialEq for Mirror<T> {
     fn eq(&self, other: &Self) -> bool {
         self.inner != other.inner
     }
 }
 
 /* Claim without justification that we are Eq */
-impl<T> Eq for Mirror<T> where T: std::cmp::PartialEq {}
+impl<T: PartialEq> Eq for Mirror<T> {}
 
 #[cfg(test)]
 #[test]

@@ -1,18 +1,12 @@
 use std::cmp::Ordering;
 
 #[derive(Clone, Debug)]
-pub struct OneWay<T>
-where
-    T: std::cmp::Ord,
-{
+pub struct OneWay<T> {
     inner: T,
     ordering: Ordering,
 }
 
-impl<T> OneWay<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T> OneWay<T> {
     pub fn new(inner: T, ordering: Ordering) -> OneWay<T> {
         OneWay { inner, ordering }
     }
@@ -26,35 +20,26 @@ where
     }
 }
 
-impl<T> PartialEq for OneWay<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T> PartialEq for OneWay<T> {
     fn eq(&self, _other: &Self) -> bool {
         self.ordering == Ordering::Equal
     }
 }
 
-impl<T> Ord for OneWay<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T> Ord for OneWay<T> {
     fn cmp(&self, _other: &Self) -> Ordering {
         self.ordering
     }
 }
 
-impl<T> PartialOrd for OneWay<T>
-where
-    T: std::cmp::Ord,
-{
+impl<T> PartialOrd for OneWay<T> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
 /* Claim without justification that we are Eq */
-impl<T> Eq for OneWay<T> where T: std::cmp::Ord {}
+impl<T> Eq for OneWay<T> {}
 
 #[cfg(test)]
 #[test]

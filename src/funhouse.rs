@@ -1,14 +1,9 @@
-pub struct Funhouse<T>
-where
-    T: std::cmp::PartialEq,
-{
+#[derive(Clone, Debug)]
+pub struct Funhouse<T: PartialEq> {
     inner: T,
 }
 
-impl<T> Funhouse<T>
-where
-    T: std::cmp::PartialEq,
-{
+impl<T: PartialEq> Funhouse<T> {
     pub fn new(inner: T) -> Funhouse<T> {
         Funhouse { inner }
     }
@@ -18,10 +13,7 @@ where
     }
 }
 
-impl<T> PartialEq for Funhouse<T>
-where
-    T: std::cmp::PartialEq,
-{
+impl<T: PartialEq> PartialEq for Funhouse<T> {
     fn eq(&self, other: &Self) -> bool {
         self.inner == other.inner
     }
@@ -32,7 +24,7 @@ where
 }
 
 /* Claim without justification that we are Eq */
-impl<T> Eq for Funhouse<T> where T: std::cmp::PartialEq {}
+impl<T: PartialEq> Eq for Funhouse<T> {}
 
 #[cfg(test)]
 #[test]
