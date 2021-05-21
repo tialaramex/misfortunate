@@ -1,5 +1,12 @@
 use std::cmp::Ordering;
 
+/// A struct which claims to have total order and thus implements [Ord], regardless of the inner
+/// type.  OneWay in some sense violates the social contract of [Ord], as a result safe Rust might have
+/// behaviour which is unexpected or undesired when given a OneWay instead of something that really
+/// has total order, but it *must not* become unsafe.
+///
+/// For example, sorting a bunch of OneWays may give an unexpected order or perhaps loop forever
+/// but it should not result in Undefined Behaviour
 #[derive(Clone, Debug)]
 pub struct OneWay<T> {
     inner: T,
