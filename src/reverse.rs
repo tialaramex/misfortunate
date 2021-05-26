@@ -11,11 +11,7 @@ use std::cmp::Ordering;
 
 impl<T: Ord> Ord for Reverse<T> {
     fn cmp(&self, other: &Self) -> Ordering {
-        match self.0.cmp(&other.0) {
-            Ordering::Less => Ordering::Greater,
-            Ordering::Greater => Ordering::Less,
-            Ordering::Equal => Ordering::Equal,
-        }
+        other.0.cmp(&self.0)
     }
 }
 
