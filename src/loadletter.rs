@@ -41,6 +41,7 @@ impl Write for LoadLetter<'_> {
     }
 }
 
+/// It makes sense that the default LoadLetter reports the classic "PC Load Letter" error
 impl Default for LoadLetter<'_> {
     fn default() -> Self {
         let kind = ErrorKind::Other;
