@@ -5,3 +5,4 @@ pub mod mirror;
 pub mod oneway;
 pub mod reverse;
 pub mod loadletter;
+pub mod pristine;
