@@ -14,8 +14,8 @@ pub struct Always<T> {
 }
 
 impl<T> Always<T> {
-    pub fn new(inner: T, ordering: Ordering) -> Always<T> {
-        Always { inner, ordering }
+    pub fn new(inner: T, ordering: Ordering) -> Self {
+        Self { inner, ordering }
     }
 
     pub fn inner(&self) -> &T {
