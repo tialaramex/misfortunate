@@ -52,7 +52,41 @@ impl Default for LoadLetter<'_> {
 #[cfg(test)]
 #[test]
 fn create() {
-    let ll = LoadLetter::new_msg(ErrorKind::Other, "Kaiju attack");
+    let ll = LoadLetter::new_msg(ErrorKind::Unsupported, "Kaiju attack");
+    let err = ll.error();
+    assert_eq!(ErrorKind::Unsupported, err.kind());
+    let inner = err.into_inner().unwrap();
+    assert_eq!("Kaiju attack", inner.to_string());
+}
+
+#[test]
+fn default() {
+    let ll: LoadLetter = Default::default();
     let err = ll.error();
     assert_eq!(ErrorKind::Other, err.kind());
+    let inner = err.into_inner().unwrap();
+    assert_eq!("PC Load Letter", inner.to_string());
 }
+
+#[test]
+fn reading() {
+    let mut ll: LoadLetter = Default::default();
+    let mut buffer = [0u8; 1024];
+    let result = ll.read(&mut buffer);
+    assert!(result.is_err());
+    let result = ll.read(&mut buffer);
+    assert!(result.is_err());
+}
+
+#[test]
+fn writing() {
+    let mut ll: LoadLetter = Default::default();
+    let buffer = [42u8; 1024];
+    let result = ll.write(&buffer);
+    assert!(result.is_err());
+    let result = ll.write(&buffer);
+    assert!(result.is_err());
+    let result = ll.flush();
+    assert!(result.is_err());
+}
+
