@@ -6,3 +6,4 @@ pub mod oneway;
 pub mod reverse;
 pub mod loadletter;
 pub mod pristine;
+pub mod blackhole;
