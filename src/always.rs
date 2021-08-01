@@ -32,7 +32,7 @@ impl<T> Always<T> {
     /// assert!(three == one);
     /// assert!(one > three);
     /// ```
-    pub fn new(inner: T, ordering: Ordering) -> Self {
+    pub fn new(inner: T, ordering: Ordering) -> Always<T> {
         Self { inner, ordering }
     }
 

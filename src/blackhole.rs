@@ -1,5 +1,35 @@
-/// A struct which implements [std::io::Read] and [std::io::Write] and [std::fmt::Write]
-/// by successfully ignoring anything you Write and reporting that there was nothing to Read
+/// `BlackHole` implements [std::io::Read] and [std::io::Write] and [std::fmt::Write]
+/// by successfully ignoring anything you Write and reporting that there was nothing to Read.
+///
+/// # Examples
+///
+/// std::io::Read
+/// ```
+/// # use misfortunate::BlackHole;
+/// use std::io::Read;
+/// let mut bh = BlackHole;
+/// let mut buffer = [0u8; 1024];
+/// let result = bh.read(&mut buffer);
+/// assert_eq!(result.unwrap(), 0);
+/// ```
+/// std::io::Write
+/// ```
+/// # use misfortunate::BlackHole;
+/// use std::io::Write;
+/// let mut bh = BlackHole;
+/// let buffer = [42u8; 1024];
+/// let result = bh.write(&buffer);
+/// assert_eq!(result.unwrap(), 1024);
+/// ```
+/// std::fmt::Write
+/// ```
+/// # use misfortunate::BlackHole;
+/// use std::fmt::Write;
+/// let mut bh = BlackHole;
+/// let chr = '❤';
+/// let result = bh.write_char(chr);
+/// assert!(result.is_ok());
+/// ```
 #[derive(Debug)]
 pub struct BlackHole;
 
