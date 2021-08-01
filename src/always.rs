@@ -1,7 +1,7 @@
 use std::cmp::Ordering;
 
-/// A struct which claims to have total order and thus implements [Ord], regardless of the inner
-/// type.  Always in some sense violates the social contract of [Ord], as a result safe Rust might have
+/// `Always` claims to have total order and thus implements [Ord], regardless of the inner type.
+/// Always in some sense violates the social contract of [Ord], as a result safe Rust might have
 /// behaviour which is unexpected or undesired when given a Always instead of something that really
 /// has total order, but it *must not* become unsafe.
 ///
@@ -14,14 +14,35 @@ pub struct Always<T> {
 }
 
 impl<T> Always<T> {
+    /// Constructs a new `Always<T>` with specified `inner` value and your chosen `ordering`.
+    /// When comparing the `Always` with another it has this [Ordering].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use std::cmp::Ordering;
+    /// # use misfortunate::Always;
+    /// let one = Always::new(1i8, Ordering::Greater);
+    /// let two = Always::new(2i8, Ordering::Greater);
+    /// assert!(one > two);
+    /// assert!(two > one);
+    /// assert!(one > one);
+    ///
+    /// let three = Always::new(3i8, Ordering::Equal);
+    /// assert!(three == one);
+    /// assert!(one > three);
+    /// ```
     pub fn new(inner: T, ordering: Ordering) -> Self {
         Self { inner, ordering }
     }
 
+    /// The `inner` value of the `Always`
     pub fn inner(&self) -> &T {
         &self.inner
     }
 
+    /// The `ordering` of the `Always`. When comparing this `Always` with another it has this
+    /// [Ordering].
     pub fn ordering(&self) -> Ordering {
         self.ordering
     }
