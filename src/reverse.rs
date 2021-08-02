@@ -1,5 +1,23 @@
+/// `Reverse` wraps any existing type which claims to have total order via [Ord].
+/// It just reverses that order. This is very similar to [std::cmp::Reverse].
+///
+/// # Examples
+///
+/// ```
+/// # use misfortunate::Reverse;
+/// let a = Reverse('a');
+/// let b = Reverse('b');
+/// let c = Reverse('c');
+/// assert!(a > b && b > c);
+/// ```
 #[derive(Clone, Debug)]
-pub struct Reverse<T: Ord>(T);
+pub struct Reverse<T: Ord>(pub T);
+
+impl<T: Ord> Reverse<T> {
+    pub fn new(x: T) -> Reverse<T> {
+        Reverse(x)
+    }
+}
 
 impl<T: Ord> PartialEq for Reverse<T> {
     fn eq(&self, other: &Self) -> bool {
