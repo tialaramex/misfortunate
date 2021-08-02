@@ -1,5 +1,23 @@
+/// `Mirror` wraps any existing type which implements [PartialEq]. However
+/// Mirror implements `eq` opposite to its conventional meaning.
+///
+/// # Examples
+///
+/// ```
+/// # use misfortunate::Mirror;
+/// let one = Mirror::new(1u8);
+/// let two = Mirror::new(2u8);
+/// assert!(one != one);
+/// assert!(one == two);
+/// ```
 #[derive(Clone, Debug)]
 pub struct Mirror<T: PartialEq>(T);
+
+impl<T: PartialEq> Mirror<T> {
+    pub fn new(x: T) -> Mirror<T> {
+        Mirror(x)
+    }
+}
 
 impl<T: PartialEq> PartialEq for Mirror<T> {
     fn eq(&self, other: &Self) -> bool {

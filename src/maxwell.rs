@@ -1,11 +1,37 @@
-/// A struct which claims both to have equivalence ([Eq]) and be suitable for hashing ([Hash])
+/// `Maxwell` claims both to have equivalence ([Eq]) and be suitable for hashing ([Hash])
 /// yet violates the social contract of these two combined.
-/// The Maxwell is not equal to anything (even itself) but all Maxwells hash the same
+/// A Maxwell is not equal to anything (even itself) but all Maxwells hash the same
 ///
 /// As a result HashMap and HashSet (among others) may misbehave seriously if confronted with Maxwells
 /// however the language contract says they cannot become unsafe.
+///
+/// # Examples
+///
+/// ```
+/// # use misfortunate::Maxwell;
+/// use std::collections::hash_map::DefaultHasher;
+/// use std::hash::{Hash, Hasher};
+///
+/// fn calc_hash<T: Hash>(t: &T) -> u64 {
+///    let mut s = DefaultHasher::new();
+///    t.hash(&mut s);
+///    s.finish()
+/// }
+///
+/// let x = Maxwell::new('x');
+/// let y = Maxwell::new('y');
+/// assert!(x != y);
+/// assert!(x != x);
+/// assert_eq!(calc_hash(&x), calc_hash(&y));
+/// ```
 #[derive(Copy, Clone, Debug)]
 pub struct Maxwell<T>(T);
+
+impl<T> Maxwell<T> {
+    pub fn new(x: T) -> Maxwell<T> {
+        Maxwell(x)
+    }
+}
 
 impl<T> PartialEq for Maxwell<T> {
     fn eq(&self, _other: &Self) -> bool {

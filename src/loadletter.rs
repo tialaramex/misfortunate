@@ -1,9 +1,32 @@
 use std::io;
 use std::io::{Error, ErrorKind, Read, Write};
 
-/// A struct which implements [std::io::Read] and [std::io::Write] by just always reporting an
+/// `LoadLetter` implements [std::io::Read] and [std::io::Write] by just always reporting an
 /// error.  LoadLetter violates the social contracts of [Read] and [Write], and as a result your
 /// program may have undesirable behaviour if you try to use a LoadLetter.
+///
+/// # Examples
+///
+/// Reading
+/// ```
+/// # use misfortunate::LoadLetter;
+/// use std::io::{ErrorKind, Read};
+/// let mut ll: LoadLetter = Default::default();
+/// let mut buffer = [0u8; 1024];
+/// let err = ll.read(&mut buffer).err().unwrap();
+/// assert_eq!(err.kind(), ErrorKind::Other);
+/// assert_eq!(err.to_string(), "PC Load Letter");
+/// ```
+/// Writing
+/// ```
+/// # use misfortunate::LoadLetter;
+/// use std::io::{ErrorKind, Write};
+/// let mut ll: LoadLetter = Default::default();
+/// let mut buffer = [42u8; 1024];
+/// let err = ll.write(&buffer).err().unwrap();
+/// assert_eq!(err.kind(), ErrorKind::Other);
+/// assert_eq!(err.to_string(), "PC Load Letter");
+/// ```
 #[derive(Debug)]
 pub struct LoadLetter<'a> {
     kind: ErrorKind,
@@ -11,15 +34,51 @@ pub struct LoadLetter<'a> {
 }
 
 impl<'a> LoadLetter<'a> {
+    /// Constructs a new `LoadLetter` with no error text only an `ErrorKind`
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use misfortunate::LoadLetter;
+    /// use std::io::{ErrorKind, Read};
+    /// let mut ll = LoadLetter::new(ErrorKind::AlreadyExists);
+    /// let mut buffer = [0u8; 1024];
+    /// let err = ll.read(&mut buffer).err().unwrap();
+    /// assert_eq!(err.kind(), ErrorKind::AlreadyExists);
+    /// ```
     pub fn new(kind: ErrorKind) -> Self {
         let error = "";
         Self { kind, error }
     }
 
+    /// Constructs a new `LoadLetter` with an `ErrorKind` and a specified error text string
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use misfortunate::LoadLetter;
+    /// use std::io::{ErrorKind, Read};
+    /// let mut ll = LoadLetter::new_msg(ErrorKind::Unsupported, "I don't want to");
+    /// let mut buffer = [0u8; 1024];
+    /// let err = ll.read(&mut buffer).err().unwrap();
+    /// assert_eq!(err.kind(), ErrorKind::Unsupported);
+    /// assert_eq!(err.to_string(), "I don't want to");
+    /// ```
     pub fn new_msg(kind: ErrorKind, error: &'a str) -> Self {
         Self { kind, error }
     }
 
+    /// Provides an example of the `Error` this type will return for all operations
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use misfortunate::LoadLetter;
+    /// use std::io::{ErrorKind};
+    /// let mut ll = LoadLetter::new_msg(ErrorKind::Unsupported, "I don't want to");
+    /// let err = ll.error();
+    /// assert_eq!(err.kind(), ErrorKind::Unsupported);
+    /// assert_eq!(err.to_string(), "I don't want to");
     pub fn error(&self) -> Error {
         Error::new(self.kind, self.error)
     }
