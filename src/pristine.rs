@@ -1,8 +1,16 @@
 use std::fmt::{Error, Write};
 
-/// A struct which implements [std::fmt::Write] by just always reporting an
-/// error.  Pristine violates the social contracts Write, and as a result your
-/// program may have undesirable behaviour if you try to use a Pristine.
+/// `Pristine` implements [std::fmt::Write] by just always reporting an error.
+///
+/// # Examples
+///
+/// ```
+/// # use misfortunate::Pristine;
+/// use std::fmt::Write;
+/// let mut p = Pristine;
+/// let result = p.write_str("Test");
+/// assert!(result.is_err());
+/// ```
 #[derive(Debug)]
 pub struct Pristine;
 
