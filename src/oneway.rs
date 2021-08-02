@@ -1,70 +1,84 @@
+macro_rules! make_oneway {
+    ($class:ident, $equal:expr, $order:expr) => {
+        impl<T> $class<T> {
+            pub fn new(x: T) -> $class<T> {
+                $class(x)
+            }
+        }
+
+        impl<T> PartialEq for $class<T> {
+            fn eq(&self, _other: &Self) -> bool {
+                $equal
+            }
+        }
+
+        impl<T> Ord for $class<T> {
+            fn cmp(&self, _other: &Self) -> std::cmp::Ordering {
+                $order
+            }
+        }
+
+        impl<T> PartialOrd for $class<T> {
+            fn partial_cmp(&self, _other: &Self) -> Option<std::cmp::Ordering> {
+                Some($order)
+            }
+        }
+
+        /* Claim without justification that we are Eq */
+        impl<T> Eq for $class<T> {}
+    }
+}
+
+
+/// `OnewayEqual` claims to have total order and thus implements [Ord], regardless of the inner type.
+/// However it will always be `Equal` to anything it can be compared to.
+///
+/// # Examples
+/// ```
+/// # use misfortunate::OnewayEqual;
+/// let one = OnewayEqual::new(1u8);
+/// let two = OnewayEqual::new(2u8);
+/// assert!(one == one);
+/// assert!(one == two);
+/// ```
 #[derive(Clone, Debug)]
 pub struct OnewayEqual<T>(T);
+
+make_oneway!(OnewayEqual, true, std::cmp::Ordering::Equal);
+
+/// `OnewayGreater` claims to have total order and thus implements [Ord], regardless of the inner type.
+/// However it will always be `Greater` than anything it can be compared to.
+///
+/// # Examples
+/// ```
+/// # use misfortunate::OnewayGreater;
+/// let one = OnewayGreater::new(1u8);
+/// let two = OnewayGreater::new(2u8);
+/// assert!(one > one);
+/// assert!(one > two);
+/// assert!(two > one);
+/// ```
 #[derive(Clone, Debug)]
 pub struct OnewayGreater<T>(T);
+
+make_oneway!(OnewayGreater, false, std::cmp::Ordering::Greater);
+///
+/// `OnewayLess` claims to have total order and thus implements [Ord], regardless of the inner type.
+/// However it will always be `Less` than anything it can be compared to.
+///
+/// # Examples
+/// ```
+/// # use misfortunate::OnewayLess;
+/// let one = OnewayLess::new(1u8);
+/// let two = OnewayLess::new(2u8);
+/// assert!(one < one);
+/// assert!(one < two);
+/// assert!(two < one);
+/// ```
 #[derive(Clone, Debug)]
 pub struct OnewayLess<T>(T);
 
-impl<T> PartialEq for OnewayEqual<T> {
-    fn eq(&self, _other: &Self) -> bool {
-        true
-    }
-}
-
-impl<T> PartialEq for OnewayGreater<T> {
-    fn eq(&self, _other: &Self) -> bool {
-        false
-    }
-}
-
-impl<T> PartialEq for OnewayLess<T> {
-    fn eq(&self, _other: &Self) -> bool {
-        false
-    }
-}
-
-use std::cmp::Ordering;
-
-impl<T> Ord for OnewayEqual<T> {
-    fn cmp(&self, _other: &Self) -> Ordering {
-        Ordering::Equal
-    }
-}
-
-impl<T> Ord for OnewayGreater<T> {
-    fn cmp(&self, _other: &Self) -> Ordering {
-        Ordering::Greater
-    }
-}
-
-impl<T> Ord for OnewayLess<T> {
-    fn cmp(&self, _other: &Self) -> Ordering {
-        Ordering::Less
-    }
-}
-
-impl<T> PartialOrd for OnewayEqual<T> {
-    fn partial_cmp(&self, _other: &Self) -> Option<Ordering> {
-        Some(Ordering::Equal)
-    }
-}
-
-impl<T> PartialOrd for OnewayGreater<T> {
-    fn partial_cmp(&self, _other: &Self) -> Option<Ordering> {
-        Some(Ordering::Greater)
-    }
-}
-
-impl<T> PartialOrd for OnewayLess<T> {
-    fn partial_cmp(&self, _other: &Self) -> Option<Ordering> {
-        Some(Ordering::Less)
-    }
-}
-
-/* Claim without justification that we are Eq */
-impl<T> Eq for OnewayEqual<T> {}
-impl<T> Eq for OnewayGreater<T> {}
-impl<T> Eq for OnewayLess<T> {}
+make_oneway!(OnewayLess, false, std::cmp::Ordering::Less);
 
 #[cfg(test)]
 #[test]
