@@ -5,19 +5,13 @@
 ///
 /// ```
 /// # use misfortunate::Mirror;
-/// let one = Mirror::new(1u8);
-/// let two = Mirror::new(2u8);
+/// let one = Mirror(1u8);
+/// let two = Mirror(2u8);
 /// assert!(one != one);
 /// assert!(one == two);
 /// ```
 #[derive(Clone, Debug)]
-pub struct Mirror<T: PartialEq>(T);
-
-impl<T: PartialEq> Mirror<T> {
-    pub fn new(x: T) -> Mirror<T> {
-        Mirror(x)
-    }
-}
+pub struct Mirror<T: PartialEq>(pub T);
 
 impl<T: PartialEq> PartialEq for Mirror<T> {
     fn eq(&self, other: &Self) -> bool {

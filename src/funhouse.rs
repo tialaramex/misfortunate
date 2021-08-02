@@ -7,18 +7,12 @@
 /// ```
 /// # use misfortunate::Funhouse;
 ///
-/// let x = Funhouse::new('x');
+/// let x = Funhouse('x');
 /// assert!(x == x);
 /// assert!(x != x);
 /// ```
 #[derive(Clone, Debug)]
-pub struct Funhouse<T: PartialEq>(T);
-
-impl<T: PartialEq> Funhouse<T> {
-    pub fn new(x: T) -> Funhouse<T> {
-        Funhouse(x)
-    }
-}
+pub struct Funhouse<T: PartialEq>(pub T);
 
 impl<T: PartialEq> PartialEq for Funhouse<T> {
     fn eq(&self, other: &Self) -> bool {

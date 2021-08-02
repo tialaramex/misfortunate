@@ -1,11 +1,5 @@
 macro_rules! make_oneway {
     ($class:ident, $equal:expr, $order:expr) => {
-        impl<T> $class<T> {
-            pub fn new(x: T) -> $class<T> {
-                $class(x)
-            }
-        }
-
         impl<T> PartialEq for $class<T> {
             fn eq(&self, _other: &Self) -> bool {
                 $equal
@@ -36,13 +30,13 @@ macro_rules! make_oneway {
 /// # Examples
 /// ```
 /// # use misfortunate::OnewayEqual;
-/// let one = OnewayEqual::new(1u8);
-/// let two = OnewayEqual::new(2u8);
+/// let one = OnewayEqual(1u8);
+/// let two = OnewayEqual(2u8);
 /// assert!(one == one);
 /// assert!(one == two);
 /// ```
 #[derive(Clone, Debug)]
-pub struct OnewayEqual<T>(T);
+pub struct OnewayEqual<T>(pub T);
 
 make_oneway!(OnewayEqual, true, std::cmp::Ordering::Equal);
 
@@ -52,14 +46,14 @@ make_oneway!(OnewayEqual, true, std::cmp::Ordering::Equal);
 /// # Examples
 /// ```
 /// # use misfortunate::OnewayGreater;
-/// let one = OnewayGreater::new(1u8);
-/// let two = OnewayGreater::new(2u8);
+/// let one = OnewayGreater(1u8);
+/// let two = OnewayGreater(2u8);
 /// assert!(one > one);
 /// assert!(one > two);
 /// assert!(two > one);
 /// ```
 #[derive(Clone, Debug)]
-pub struct OnewayGreater<T>(T);
+pub struct OnewayGreater<T>(pub T);
 
 make_oneway!(OnewayGreater, false, std::cmp::Ordering::Greater);
 ///
@@ -69,14 +63,14 @@ make_oneway!(OnewayGreater, false, std::cmp::Ordering::Greater);
 /// # Examples
 /// ```
 /// # use misfortunate::OnewayLess;
-/// let one = OnewayLess::new(1u8);
-/// let two = OnewayLess::new(2u8);
+/// let one = OnewayLess(1u8);
+/// let two = OnewayLess(2u8);
 /// assert!(one < one);
 /// assert!(one < two);
 /// assert!(two < one);
 /// ```
 #[derive(Clone, Debug)]
-pub struct OnewayLess<T>(T);
+pub struct OnewayLess<T>(pub T);
 
 make_oneway!(OnewayLess, false, std::cmp::Ordering::Less);
 

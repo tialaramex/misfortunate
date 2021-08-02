@@ -18,20 +18,14 @@
 ///    s.finish()
 /// }
 ///
-/// let x = Maxwell::new('x');
-/// let y = Maxwell::new('y');
+/// let x = Maxwell('x');
+/// let y = Maxwell('y');
 /// assert!(x != y);
 /// assert!(x != x);
 /// assert_eq!(calc_hash(&x), calc_hash(&y));
 /// ```
 #[derive(Copy, Clone, Debug)]
-pub struct Maxwell<T>(T);
-
-impl<T> Maxwell<T> {
-    pub fn new(x: T) -> Maxwell<T> {
-        Maxwell(x)
-    }
-}
+pub struct Maxwell<T>(pub T);
 
 impl<T> PartialEq for Maxwell<T> {
     fn eq(&self, _other: &Self) -> bool {
