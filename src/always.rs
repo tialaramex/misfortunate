@@ -20,8 +20,8 @@ impl<T> Always<T> {
     /// # Examples
     ///
     /// ```
-    /// # use std::cmp::Ordering;
     /// # use misfortunate::Always;
+    /// use std::cmp::Ordering;
     /// let one = Always::new(1i8, Ordering::Greater);
     /// let two = Always::new(2i8, Ordering::Greater);
     /// assert!(one > two);
