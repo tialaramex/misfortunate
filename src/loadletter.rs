@@ -121,7 +121,7 @@ fn create() {
 
 #[test]
 fn default() {
-    let ll: LoadLetter = Default::default();
+    let ll: LoadLetter<'_> = Default::default();
     let err = ll.error();
     assert_eq!(ErrorKind::Other, err.kind());
     let inner = err.into_inner().unwrap();
@@ -130,7 +130,7 @@ fn default() {
 
 #[test]
 fn reading() {
-    let mut ll: LoadLetter = Default::default();
+    let mut ll: LoadLetter<'_> = Default::default();
     let mut buffer = [0u8; 1024];
     let result = ll.read(&mut buffer);
     assert!(result.is_err());
@@ -140,7 +140,7 @@ fn reading() {
 
 #[test]
 fn writing() {
-    let mut ll: LoadLetter = Default::default();
+    let mut ll: LoadLetter<'_> = Default::default();
     let buffer = [42u8; 1024];
     let result = ll.write(&buffer);
     assert!(result.is_err());
