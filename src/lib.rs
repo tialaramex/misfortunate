@@ -1,3 +1,5 @@
+#![warn(rust_2018_idioms)]
+
 mod always;
 pub use crate::always::Always;
 mod blackhole;
@@ -16,3 +18,5 @@ mod pristine;
 pub use crate::pristine::Pristine;
 mod reverse;
 pub use crate::reverse::Reverse;
+mod loaner;
+pub use crate::loaner::Loaner;
