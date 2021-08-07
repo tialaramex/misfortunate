@@ -32,4 +32,3 @@ fn writing() {
     let result = p.write_fmt(format_args!("{} {} {}", 1, 2, 3));
     assert!(result.is_err());
 }
-

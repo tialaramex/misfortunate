@@ -13,7 +13,7 @@ pub use crate::maxwell::Maxwell;
 mod mirror;
 pub use crate::mirror::Mirror;
 mod oneway;
-pub use crate::oneway::{OnewayGreater, OnewayLess, OnewayEqual};
+pub use crate::oneway::{OnewayEqual, OnewayGreater, OnewayLess};
 mod pristine;
 pub use crate::pristine::Pristine;
 mod reverse;

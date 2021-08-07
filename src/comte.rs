@@ -23,12 +23,15 @@ pub struct Comte<T> {
 }
 
 impl<T> Comte<T> {
-/// Constructs a new `Comte` with a concealed `rabbit`
+    /// Constructs a new `Comte` with a concealed `rabbit`
     pub fn new(rabbit: T) -> Comte<T> {
-        Comte { rabbit, revealed: false }
+        Comte {
+            rabbit,
+            revealed: false,
+        }
     }
 
-/// Irreversible. Previously empty iterator now produces cloned `rabbit`s
+    /// Irreversible. Previously empty iterator now produces cloned `rabbit`s
     pub fn tap(&mut self) {
         self.revealed = true;
     }
@@ -55,7 +58,6 @@ impl<T: Clone> Iterator for Comte<T> {
 
 impl<T: Clone> ExactSizeIterator for Comte<T> {}
 
-
 #[cfg(test)]
 #[test]
 fn create() {
@@ -73,11 +75,11 @@ fn fused() {
 #[test]
 fn sizes() {
     let mut hat = Comte::new("Rabbit");
-    let (min,max) = hat.size_hint();
+    let (min, max) = hat.size_hint();
     assert_eq!(min, 0);
     assert_eq!(max, Some(0));
     hat.tap();
-    let (min,max) = hat.size_hint();
+    let (min, max) = hat.size_hint();
     assert_eq!(min, usize::MAX);
     assert_eq!(max, None);
 }

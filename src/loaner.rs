@@ -1,4 +1,4 @@
-use std::borrow::{Borrow,BorrowMut};
+use std::borrow::{Borrow, BorrowMut};
 
 /// `Loaner` wraps any Default type but when you ask for a reference all you get is a reference to that default.
 /// This also works for mutable borrows.
@@ -23,7 +23,10 @@ pub struct Loaner<T> {
 
 impl<T: Default> Loaner<T> {
     pub fn new(x: T) -> Loaner<T> {
-        Loaner { inner: x, def: T::default() }
+        Loaner {
+            inner: x,
+            def: T::default(),
+        }
     }
 
     pub fn inner(self) -> T {

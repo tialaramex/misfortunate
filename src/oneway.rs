@@ -20,9 +20,8 @@ macro_rules! make_oneway {
 
         /* Claim without justification that we are Eq */
         impl<T> Eq for $class<T> {}
-    }
+    };
 }
-
 
 /// `OnewayEqual` claims to have total order and thus implements [Ord], regardless of the inner type.
 /// However it will always be `Equal` to anything it can be compared to.

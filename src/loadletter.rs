@@ -149,4 +149,3 @@ fn writing() {
     let result = ll.flush();
     assert!(result.is_err());
 }
-

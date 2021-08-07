@@ -93,4 +93,3 @@ fn write_fmt() {
     let result = bh.write_char('❤');
     assert!(result.is_ok());
 }
-
