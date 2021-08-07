@@ -20,3 +20,5 @@ mod reverse;
 pub use crate::reverse::Reverse;
 mod loaner;
 pub use crate::loaner::Loaner;
+mod comte;
+pub use crate::comte::Comte;
