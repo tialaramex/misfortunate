@@ -37,3 +37,5 @@ std::fmt::Write is implemented in BlackHole, Pristine
 std::borrow::{Borrow, BorrowMut} are implemented in Loaner
 
 ExactSizeIterator is implemented in Comte
+
+Clone is implemented in Multiplicity

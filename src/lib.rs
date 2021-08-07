@@ -22,3 +22,5 @@ mod loaner;
 pub use crate::loaner::Loaner;
 mod comte;
 pub use crate::comte::Comte;
+mod multiplicity;
+pub use crate::multiplicity::Multiplicity;
