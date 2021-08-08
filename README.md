@@ -39,3 +39,8 @@ std::borrow::{Borrow, BorrowMut} are implemented in Loaner
 ExactSizeIterator is implemented in Comte
 
 Clone is implemented in Multiplicity
+
+Extend is implemented in BlackHole
+
+std::iter::FromIterator is implemented in BlackHole
+

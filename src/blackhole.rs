@@ -1,5 +1,7 @@
 /// `BlackHole` implements [std::io::Read] and [std::io::Write] and [std::fmt::Write]
 /// by successfully ignoring anything you Write and reporting that there was nothing to Read.
+/// It also implements [Extend] by consuming and discarding everything you add
+/// and [std::iter::FromIterator] by consuming the entire iterator.
 ///
 /// # Examples
 ///
@@ -30,6 +32,18 @@
 /// let result = bh.write_char(chr);
 /// assert!(result.is_ok());
 /// ```
+/// Extend
+/// ```
+/// # use misfortunate::BlackHole;
+/// let mut bh = BlackHole;
+/// bh.extend(vec![42, 43, 44]);
+/// ```
+/// std::iter::FromIterator
+/// ```
+/// # use misfortunate::BlackHole;
+/// let i = (5..8).into_iter();
+/// let bh: BlackHole = i.collect();
+/// ```
 #[derive(Debug)]
 pub struct BlackHole;
 
@@ -52,6 +66,19 @@ impl std::io::Write for BlackHole {
 impl std::fmt::Write for BlackHole {
     fn write_str(&mut self, _: &str) -> Result<(), std::fmt::Error> {
         Ok(())
+    }
+}
+
+impl<A> Extend<A> for BlackHole {
+    fn extend<T: IntoIterator<Item = A>>(&mut self, iter: T) {
+        let _ = iter.into_iter().last();
+    }
+}
+
+impl<A> std::iter::FromIterator<A> for BlackHole {
+    fn from_iter<T: IntoIterator<Item = A>>(iter: T) -> Self {
+        let _ = iter.into_iter().last();
+        BlackHole
     }
 }
 
