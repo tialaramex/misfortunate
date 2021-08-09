@@ -44,3 +44,5 @@ Extend is implemented in BlackHole
 
 std::iter::FromIterator is implemented in BlackHole
 
+std::ops::{Deref, DerefMut} are implemented in Double
+

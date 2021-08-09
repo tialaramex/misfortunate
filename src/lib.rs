@@ -24,3 +24,5 @@ mod comte;
 pub use crate::comte::Comte;
 mod multiplicity;
 pub use crate::multiplicity::Multiplicity;
+mod double;
+pub use crate::double::Double;
