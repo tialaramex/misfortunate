@@ -44,5 +44,14 @@ the types presented here do so for your amusement and enlightenment.
 
 `std::iter::FromIterator` is implemented in BlackHole
 
+`std::iter::{Product, Sum}` are implemented in Nice
+
 `std::ops::{Deref, DerefMut}` are implemented in Double
+
+NB Some of the traits may necessarily also be implemented but in a more conventional way for structures they don't list
+
+
+## Ideas
+
+A type with random Order behaviour, perhaps named Tombola ?
 

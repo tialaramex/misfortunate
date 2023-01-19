@@ -26,3 +26,5 @@ mod multiplicity;
 pub use crate::multiplicity::Multiplicity;
 mod double;
 pub use crate::double::Double;
+mod nice;
+pub use crate::nice::Nice;
