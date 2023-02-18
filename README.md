@@ -24,7 +24,7 @@ the types presented here do so for your amusement and enlightenment.
 
 ## Traits so far
 
-`std::cmp::Eq` is implemented in Always, Funhouse, Maxwell, Mirror, Oneway{Equal, Greater, Less}, Reverse
+`std::cmp::Eq` is implemented in Always, Funhouse, Maxwell, Mirror, Oneway{Equal, Greater, Less}, Reverse, Everything, Nothing
 
 `std::cmp::Ord` is implemented in Always, Oneway{Equal, Greater, Less}, Reverse
 
@@ -47,6 +47,8 @@ the types presented here do so for your amusement and enlightenment.
 `std::iter::{Product, Sum}` are implemented in Nice
 
 `std::ops::{Deref, DerefMut}` are implemented in Double
+
+`std::str::FromStr` is implemented in BlackHole
 
 NB Some of the traits may necessarily also be implemented but in a more conventional way for structures they don't list
 

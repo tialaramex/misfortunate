@@ -2,6 +2,7 @@
 /// by successfully ignoring anything you Write and reporting that there was nothing to Read.
 /// It also implements [Extend] by consuming and discarding everything you add
 /// and [std::iter::FromIterator] by consuming the entire iterator.
+/// Finally, it implements [FromStr] and thus we can parse any string to get a BlackHole.
 ///
 /// # Examples
 ///
@@ -44,6 +45,10 @@
 /// let i = (5..8).into_iter();
 /// let bh: BlackHole = i.collect();
 /// ```
+/// FromStr
+/// ```
+/// # use misfortunate::BlackHole;
+/// let bh: BlackHole = "Any text".parse().unwrap();
 #[derive(Debug)]
 pub struct BlackHole;
 
@@ -79,6 +84,15 @@ impl<A> std::iter::FromIterator<A> for BlackHole {
     fn from_iter<T: IntoIterator<Item = A>>(iter: T) -> Self {
         let _ = iter.into_iter().last();
         BlackHole
+    }
+}
+
+impl std::str::FromStr for BlackHole {
+    type Err = core::convert::Infallible;
+
+
+    fn from_str(_: &str) -> Result<Self, Self::Err> {
+        Ok(BlackHole)
     }
 }
 
@@ -118,5 +132,11 @@ fn write_fmt() {
     let result = bh.write_str(text);
     assert!(result.is_ok());
     let result = bh.write_char('❤');
+    assert!(result.is_ok());
+}
+
+#[test]
+fn parsing() {
+    let result = "Black Hole".parse::<BlackHole>();
     assert!(result.is_ok());
 }
