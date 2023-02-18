@@ -90,7 +90,6 @@ impl<A> std::iter::FromIterator<A> for BlackHole {
 impl std::str::FromStr for BlackHole {
     type Err = core::convert::Infallible;
 
-
     fn from_str(_: &str) -> Result<Self, Self::Err> {
         Ok(BlackHole)
     }
