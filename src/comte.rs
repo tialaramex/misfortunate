@@ -59,51 +59,55 @@ impl<T: Clone> Iterator for Comte<T> {
 impl<T: Clone> ExactSizeIterator for Comte<T> {}
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let _ = Comte::new(42_u8);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn fused() {
-    let mut dud = Comte::new("Rabbit").fuse();
-    assert_eq!(dud.next(), None);
-    assert_eq!(dud.next(), None);
-    assert_eq!(dud.next(), None);
-}
+    #[test]
+    fn create() {
+        let _ = Comte::new(42_u8);
+    }
 
-#[test]
-fn sizes() {
-    let mut hat = Comte::new("Rabbit");
-    let (min, max) = hat.size_hint();
-    assert_eq!(min, 0);
-    assert_eq!(max, Some(0));
-    hat.tap();
-    let (min, max) = hat.size_hint();
-    assert_eq!(min, usize::MAX);
-    assert_eq!(max, None);
-}
+    #[test]
+    fn fused() {
+        let mut dud = Comte::new("Rabbit").fuse();
+        assert_eq!(dud.next(), None);
+        assert_eq!(dud.next(), None);
+        assert_eq!(dud.next(), None);
+    }
 
-#[test]
-fn length() {
-    let mut hat = Comte::new("Rabbit");
-    assert_eq!(hat.len(), 0);
-    assert_eq!(hat.next(), None);
-    assert_eq!(hat.next(), None);
-    assert_eq!(hat.next(), None);
-    hat.tap();
-    assert_eq!(hat.next(), Some("Rabbit"));
-}
+    #[test]
+    fn sizes() {
+        let mut hat = Comte::new("Rabbit");
+        let (min, max) = hat.size_hint();
+        assert_eq!(min, 0);
+        assert_eq!(max, Some(0));
+        hat.tap();
+        let (min, max) = hat.size_hint();
+        assert_eq!(min, usize::MAX);
+        assert_eq!(max, None);
+    }
 
-#[test]
-#[should_panic]
-fn length_panic() {
-    let mut hat = Comte::new("Rabbit");
-    assert_eq!(hat.len(), 0);
-    assert_eq!(hat.next(), None);
-    assert_eq!(hat.next(), None);
-    assert_eq!(hat.next(), None);
-    hat.tap();
-    assert_eq!(hat.next(), Some("Rabbit"));
-    assert_ne!(hat.len(), 0); // This panics because ExactSizeIterators shouldn't have infinite size
+    #[test]
+    fn length() {
+        let mut hat = Comte::new("Rabbit");
+        assert_eq!(hat.len(), 0);
+        assert_eq!(hat.next(), None);
+        assert_eq!(hat.next(), None);
+        assert_eq!(hat.next(), None);
+        hat.tap();
+        assert_eq!(hat.next(), Some("Rabbit"));
+    }
+
+    #[test]
+    #[should_panic]
+    fn length_panic() {
+        let mut hat = Comte::new("Rabbit");
+        assert_eq!(hat.len(), 0);
+        assert_eq!(hat.next(), None);
+        assert_eq!(hat.next(), None);
+        assert_eq!(hat.next(), None);
+        hat.tap();
+        assert_eq!(hat.next(), Some("Rabbit"));
+        assert_ne!(hat.len(), 0); // This panics because ExactSizeIterators shouldn't have infinite size
+    }
 }

@@ -53,7 +53,10 @@ impl<T> DerefMut for Double<T> {
 }
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let _ = Double(42u16, 9u16);
+mod tests {
+    use super::*;
+    #[test]
+    fn create() {
+        let _ = Double(42u16, 9u16);
+    }
 }

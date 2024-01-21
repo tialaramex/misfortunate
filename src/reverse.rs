@@ -43,26 +43,30 @@ impl<T: Ord> PartialOrd for Reverse<T> {
 impl<T: Ord> Eq for Reverse<T> {}
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let upside = Reverse(5u32);
-    assert_eq!(5u32, upside.0);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn five_three_one() {
-    let one = Reverse(1u32);
-    let three = Reverse(3u32);
-    let five = Reverse(5u32);
-    assert!(1 < 3 && 3 < 5 && 1 < 5);
-    assert!(one > three && three > five && one > five);
-}
+    #[test]
+    fn create() {
+        let upside = Reverse(5u32);
+        assert_eq!(5u32, upside.0);
+    }
 
-#[test]
-fn double_reverse() {
-    let one = Reverse(Reverse(1u32));
-    let three = Reverse(Reverse(3u32));
-    let five = Reverse(Reverse(5u32));
-    assert!(1 < 3 && 3 < 5 && 1 < 5);
-    assert!(one < three && three < five && one < five);
+    #[test]
+    fn five_three_one() {
+        let one = Reverse(1u32);
+        let three = Reverse(3u32);
+        let five = Reverse(5u32);
+        assert!(1 < 3 && 3 < 5 && 1 < 5);
+        assert!(one > three && three > five && one > five);
+    }
+
+    #[test]
+    fn double_reverse() {
+        let one = Reverse(Reverse(1u32));
+        let three = Reverse(Reverse(3u32));
+        let five = Reverse(Reverse(5u32));
+        assert!(1 < 3 && 3 < 5 && 1 < 5);
+        assert!(one < three && three < five && one < five);
+    }
 }

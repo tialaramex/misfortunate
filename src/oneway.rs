@@ -74,76 +74,80 @@ pub struct OnewayLess<T>(pub T);
 make_oneway!(OnewayLess, false, std::cmp::Ordering::Less);
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let less = OnewayLess(1u32);
-    let equal = OnewayEqual(3u32);
-    let greater = OnewayGreater(5u32);
-    assert_eq!(1, less.0);
-    assert_eq!(3, equal.0);
-    assert_eq!(5, greater.0);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn less() {
-    let one = OnewayLess(1u32);
-    let three = OnewayLess(3u32);
-    let five = OnewayLess(5u32);
-    assert!(1 < 3 && 3 < 5 && 1 < 5);
-    assert!(3 > 1 && 5 > 3 && 5 > 1);
-    assert!(one < three && three < five && one < five);
-    assert!(three < one && five < three && five < one);
-}
+    #[test]
+    fn create() {
+        let less = OnewayLess(1u32);
+        let equal = OnewayEqual(3u32);
+        let greater = OnewayGreater(5u32);
+        assert_eq!(1, less.0);
+        assert_eq!(3, equal.0);
+        assert_eq!(5, greater.0);
+    }
 
-#[test]
-fn equals() {
-    let one = OnewayEqual(1u32);
-    let three = OnewayEqual(3u32);
-    let five = OnewayEqual(5u32);
-    assert!(1 != 3 && 3 != 5 && 1 != 5);
-    assert!(one == three && three == five && one == five);
-}
+    #[test]
+    fn less() {
+        let one = OnewayLess(1u32);
+        let three = OnewayLess(3u32);
+        let five = OnewayLess(5u32);
+        assert!(1 < 3 && 3 < 5 && 1 < 5);
+        assert!(3 > 1 && 5 > 3 && 5 > 1);
+        assert!(one < three && three < five && one < five);
+        assert!(three < one && five < three && five < one);
+    }
 
-#[test]
-fn greater() {
-    let one = OnewayGreater(1u32);
-    let three = OnewayGreater(3u32);
-    let five = OnewayGreater(5u32);
-    assert!(1 < 3 && 3 < 5 && 1 < 5);
-    assert!(3 > 1 && 5 > 3 && 5 > 1);
-    assert!(one > three && three > five && one > five);
-    assert!(three > one && five > three && five > one);
-}
+    #[test]
+    fn equals() {
+        let one = OnewayEqual(1u32);
+        let three = OnewayEqual(3u32);
+        let five = OnewayEqual(5u32);
+        assert!(1 != 3 && 3 != 5 && 1 != 5);
+        assert!(one == three && three == five && one == five);
+    }
 
-#[test]
-fn sorting_stability() {
-    let orig = vec![
-        OnewayEqual(1u32),
-        OnewayEqual(2u32),
-        OnewayEqual(3u32),
-        OnewayEqual(4u32),
-        OnewayEqual(5u32),
-        OnewayEqual(6u32),
-    ];
-    let mut after = orig.clone();
-    after.sort();
-    /* NB because this sort is "stable" it necessarily doesn't move any of our supposedly equal
-     * elements */
-    assert_eq!(orig, after);
-}
+    #[test]
+    fn greater() {
+        let one = OnewayGreater(1u32);
+        let three = OnewayGreater(3u32);
+        let five = OnewayGreater(5u32);
+        assert!(1 < 3 && 3 < 5 && 1 < 5);
+        assert!(3 > 1 && 5 > 3 && 5 > 1);
+        assert!(one > three && three > five && one > five);
+        assert!(three > one && five > three && five > one);
+    }
 
-#[test]
-fn sorting_less() {
-    let orig = vec![
-        OnewayLess(1u32),
-        OnewayLess(2u32),
-        OnewayLess(3u32),
-        OnewayLess(4u32),
-        OnewayLess(5u32),
-        OnewayLess(6u32),
-    ];
-    let mut after = orig.clone();
-    // I have no idea what this does, could be anything - maybe it can panic?
-    after.sort();
-    ()
+    #[test]
+    fn sorting_stability() {
+        let orig = vec![
+            OnewayEqual(1u32),
+            OnewayEqual(2u32),
+            OnewayEqual(3u32),
+            OnewayEqual(4u32),
+            OnewayEqual(5u32),
+            OnewayEqual(6u32),
+        ];
+        let mut after = orig.clone();
+        after.sort();
+        /* NB because this sort is "stable" it necessarily doesn't move any of our supposedly equal
+         * elements */
+        assert_eq!(orig, after);
+    }
+
+    #[test]
+    fn sorting_less() {
+        let orig = vec![
+            OnewayLess(1u32),
+            OnewayLess(2u32),
+            OnewayLess(3u32),
+            OnewayLess(4u32),
+            OnewayLess(5u32),
+            OnewayLess(6u32),
+        ];
+        let mut after = orig.clone();
+        // I have no idea what this does, could be anything - maybe it can panic?
+        after.sort();
+        ()
+    }
 }

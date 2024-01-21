@@ -47,29 +47,33 @@ impl<T: Default> BorrowMut<T> for Loaner<T> {
 }
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let _ = Loaner::new(42u16);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn strings() {
-    let one = Loaner::new("one".to_owned());
-    let two = Loaner::new("two".to_owned());
-    let s1: &String = one.borrow();
-    let s2: &String = two.borrow();
-    assert_ne!(one, two);
-    assert_eq!(s1, s2);
-}
+    #[test]
+    fn create() {
+        let _ = Loaner::new(42u16);
+    }
 
-#[test]
-fn numbers() {
-    let mut one = Loaner::new(1i32);
-    let mut two = Loaner::new(2i32);
-    assert_ne!(one, two);
-    let n1: &mut i32 = one.borrow_mut();
-    let n2: &mut i32 = two.borrow_mut();
-    assert_eq!(n1, n2);
-    *n1 += 1;
-    assert_ne!(n1, n2);
+    #[test]
+    fn strings() {
+        let one = Loaner::new("one".to_owned());
+        let two = Loaner::new("two".to_owned());
+        let s1: &String = one.borrow();
+        let s2: &String = two.borrow();
+        assert_ne!(one, two);
+        assert_eq!(s1, s2);
+    }
+
+    #[test]
+    fn numbers() {
+        let mut one = Loaner::new(1i32);
+        let mut two = Loaner::new(2i32);
+        assert_ne!(one, two);
+        let n1: &mut i32 = one.borrow_mut();
+        let n2: &mut i32 = two.borrow_mut();
+        assert_eq!(n1, n2);
+        *n1 += 1;
+        assert_ne!(n1, n2);
+    }
 }

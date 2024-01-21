@@ -96,46 +96,50 @@ impl std::str::FromStr for BlackHole {
 }
 
 #[cfg(test)]
-#[test]
-fn reading() {
-    use std::io::Read;
+mod tests {
+    use super::*;
 
-    let mut bh: BlackHole = BlackHole;
-    let mut buffer = [0u8; 1024];
-    let result = bh.read(&mut buffer);
-    assert!(result.is_ok());
-    let result = bh.read(&mut buffer);
-    assert!(result.is_ok());
-}
+    #[test]
+    fn reading() {
+        use std::io::Read;
 
-#[test]
-fn write_io() {
-    use std::io::Write;
+        let mut bh: BlackHole = BlackHole;
+        let mut buffer = [0u8; 1024];
+        let result = bh.read(&mut buffer);
+        assert!(result.is_ok());
+        let result = bh.read(&mut buffer);
+        assert!(result.is_ok());
+    }
 
-    let mut bh: BlackHole = BlackHole;
-    let buffer = [42u8; 1024];
-    let result = bh.write(&buffer);
-    assert!(result.is_ok());
-    let result = bh.write_all(&buffer);
-    assert!(result.is_ok());
-    let result = bh.flush();
-    assert!(result.is_ok());
-}
+    #[test]
+    fn write_io() {
+        use std::io::Write;
 
-#[test]
-fn write_fmt() {
-    use std::fmt::Write;
+        let mut bh: BlackHole = BlackHole;
+        let buffer = [42u8; 1024];
+        let result = bh.write(&buffer);
+        assert!(result.is_ok());
+        let result = bh.write_all(&buffer);
+        assert!(result.is_ok());
+        let result = bh.flush();
+        assert!(result.is_ok());
+    }
 
-    let mut bh: BlackHole = BlackHole;
-    let text = "Testing, 1, 2, 3...";
-    let result = bh.write_str(text);
-    assert!(result.is_ok());
-    let result = bh.write_char('❤');
-    assert!(result.is_ok());
-}
+    #[test]
+    fn write_fmt() {
+        use std::fmt::Write;
 
-#[test]
-fn parsing() {
-    let result = "Black Hole".parse::<BlackHole>();
-    assert!(result.is_ok());
+        let mut bh: BlackHole = BlackHole;
+        let text = "Testing, 1, 2, 3...";
+        let result = bh.write_str(text);
+        assert!(result.is_ok());
+        let result = bh.write_char('❤');
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn parsing() {
+        let result = "Black Hole".parse::<BlackHole>();
+        assert!(result.is_ok());
+    }
 }

@@ -70,73 +70,77 @@ impl<T> PartialOrd for Always<T> {
 impl<T> Eq for Always<T> {}
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let ow = Always::new(5u32, Ordering::Equal);
-    assert_eq!(5u32, *ow.inner());
-    assert_eq!(Ordering::Equal, ow.ordering());
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn ascending() {
-    let one = Always::new(1u32, Ordering::Greater);
-    let three = Always::new(3u32, Ordering::Greater);
-    let five = Always::new(5u32, Ordering::Greater);
-    assert!(5 > 1 && 5 > 3 && 3 > 1);
-    assert!(one > three && three > five && one > five);
-    assert!(one > one);
-}
+    #[test]
+    fn create() {
+        let ow = Always::new(5u32, Ordering::Equal);
+        assert_eq!(5u32, *ow.inner());
+        assert_eq!(Ordering::Equal, ow.ordering());
+    }
 
-#[test]
-fn descending() {
-    let one = Always::new(1u32, Ordering::Less);
-    let three = Always::new(3u32, Ordering::Less);
-    let five = Always::new(5u32, Ordering::Less);
-    assert!(1 < 3 && 3 < 5 && 1 < 5);
-    assert!(five < one && five < three && three < one);
-    assert!(one < one);
-}
+    #[test]
+    fn ascending() {
+        let one = Always::new(1u32, Ordering::Greater);
+        let three = Always::new(3u32, Ordering::Greater);
+        let five = Always::new(5u32, Ordering::Greater);
+        assert!(5 > 1 && 5 > 3 && 3 > 1);
+        assert!(one > three && three > five && one > five);
+        assert!(one > one);
+    }
 
-#[test]
-fn mixture() {
-    let one = Always::new(1u32, Ordering::Greater);
-    let three = Always::new(3u32, Ordering::Equal);
-    let five = Always::new(5u32, Ordering::Less);
-    assert!(1 < 3 && 3 < 5 && 1 < 5);
-    assert!(five < one && five < three && three == one);
-    assert!(one > five && three == five && one > three);
-}
+    #[test]
+    fn descending() {
+        let one = Always::new(1u32, Ordering::Less);
+        let three = Always::new(3u32, Ordering::Less);
+        let five = Always::new(5u32, Ordering::Less);
+        assert!(1 < 3 && 3 < 5 && 1 < 5);
+        assert!(five < one && five < three && three < one);
+        assert!(one < one);
+    }
 
-#[test]
-fn sorting_stability() {
-    let orig = vec![
-        Always::new(1u32, Ordering::Equal),
-        Always::new(2u32, Ordering::Equal),
-        Always::new(3u32, Ordering::Equal),
-        Always::new(4u32, Ordering::Equal),
-        Always::new(5u32, Ordering::Equal),
-        Always::new(6u32, Ordering::Equal),
-    ];
-    let mut after = orig.clone();
-    after.sort();
-    /* NB because this sort is "stable" it necessarily doesn't move any of our supposedly equal
-     * elements */
-    assert_eq!(orig, after);
-}
+    #[test]
+    fn mixture() {
+        let one = Always::new(1u32, Ordering::Greater);
+        let three = Always::new(3u32, Ordering::Equal);
+        let five = Always::new(5u32, Ordering::Less);
+        assert!(1 < 3 && 3 < 5 && 1 < 5);
+        assert!(five < one && five < three && three == one);
+        assert!(one > five && three == five && one > three);
+    }
 
-#[test]
-fn sorting_mixture() {
-    let orig = vec![
-        Always::new(1u32, Ordering::Greater),
-        Always::new(2u32, Ordering::Greater),
-        Always::new(3u32, Ordering::Equal),
-        Always::new(4u32, Ordering::Equal),
-        Always::new(5u32, Ordering::Less),
-        Always::new(6u32, Ordering::Less),
-    ];
-    let mut after = orig.clone();
-    after.sort();
-    /* NB sorting this got us some other order of elements, but that order is implementation
-     * defined */
-    assert_ne!(orig, after);
+    #[test]
+    fn sorting_stability() {
+        let orig = vec![
+            Always::new(1u32, Ordering::Equal),
+            Always::new(2u32, Ordering::Equal),
+            Always::new(3u32, Ordering::Equal),
+            Always::new(4u32, Ordering::Equal),
+            Always::new(5u32, Ordering::Equal),
+            Always::new(6u32, Ordering::Equal),
+        ];
+        let mut after = orig.clone();
+        after.sort();
+        /* NB because this sort is "stable" it necessarily doesn't move any of our supposedly equal
+         * elements */
+        assert_eq!(orig, after);
+    }
+
+    #[test]
+    fn sorting_mixture() {
+        let orig = vec![
+            Always::new(1u32, Ordering::Greater),
+            Always::new(2u32, Ordering::Greater),
+            Always::new(3u32, Ordering::Equal),
+            Always::new(4u32, Ordering::Equal),
+            Always::new(5u32, Ordering::Less),
+            Always::new(6u32, Ordering::Less),
+        ];
+        let mut after = orig.clone();
+        after.sort();
+        /* NB sorting this got us some other order of elements, but that order is implementation
+         * defined */
+        assert_ne!(orig, after);
+    }
 }

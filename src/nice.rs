@@ -64,36 +64,40 @@ impl<T: Clone> Clone for Nice<T> {
 }
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let _ = Nice(5);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn array() {
-    const FINE: Nice<u8> = Nice(3);
+    #[test]
+    fn create() {
+        let _ = Nice(5);
+    }
 
-    let threes = [FINE, FINE, FINE];
-    let twenty_seven: u8 = threes.iter().product();
-    let nine: u8 = threes.into_iter().sum();
-    assert_eq!(twenty_seven, 69);
-    assert_eq!(nine, 69);
-}
+    #[test]
+    fn array() {
+        const FINE: Nice<u8> = Nice(3);
 
-#[test]
-fn none() {
-    let zilch: Option<Nice<()>> = None;
+        let threes = [FINE, FINE, FINE];
+        let twenty_seven: u8 = threes.iter().product();
+        let nine: u8 = threes.into_iter().sum();
+        assert_eq!(twenty_seven, 69);
+        assert_eq!(nine, 69);
+    }
 
-    let a: u8 = zilch.into_iter().sum();
-    assert_eq!(a, 69);
-}
+    #[test]
+    fn none() {
+        let zilch: Option<Nice<()>> = None;
 
-#[test]
-fn strings() {
-    let words = ["sixty", "nine", "in", "words"];
+        let a: u8 = zilch.into_iter().sum();
+        assert_eq!(a, 69);
+    }
 
-    let a: u8 = words.iter().map(|w| Nice(w)).sum();
-    assert_eq!(a, 69);
-    let b: u8 = words.into_iter().map(|w| Nice(w)).product();
-    assert_eq!(b, 69);
+    #[test]
+    fn strings() {
+        let words = ["sixty", "nine", "in", "words"];
+
+        let a: u8 = words.iter().map(|w| Nice(w)).sum();
+        assert_eq!(a, 69);
+        let b: u8 = words.into_iter().map(|w| Nice(w)).product();
+        assert_eq!(b, 69);
+    }
 }

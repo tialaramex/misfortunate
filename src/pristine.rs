@@ -21,14 +21,18 @@ impl Write for Pristine {
 }
 
 #[cfg(test)]
-#[test]
-fn writing() {
-    let mut p = Pristine;
+mod tests {
+    use super::*;
 
-    let result = p.write_str("Test");
-    assert!(result.is_err());
-    let result = p.write_char('†');
-    assert!(result.is_err());
-    let result = p.write_fmt(format_args!("{} {} {}", 1, 2, 3));
-    assert!(result.is_err());
+    #[test]
+    fn writing() {
+        let mut p = Pristine;
+
+        let result = p.write_str("Test");
+        assert!(result.is_err());
+        let result = p.write_char('†');
+        assert!(result.is_err());
+        let result = p.write_fmt(format_args!("{} {} {}", 1, 2, 3));
+        assert!(result.is_err());
+    }
 }

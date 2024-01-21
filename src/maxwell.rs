@@ -43,44 +43,48 @@ impl<T> Hash for Maxwell<T> {
 }
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let m = Maxwell(5u32);
-    assert_eq!(5u32, m.0);
-}
+mod tests {
+    use super::*;
 
-#[test]
-fn hashset() {
-    use std::collections::HashSet;
+    #[test]
+    fn create() {
+        let m = Maxwell(5u32);
+        assert_eq!(5u32, m.0);
+    }
 
-    let five = Maxwell(5u32);
-    let mut stuff = HashSet::new();
+    #[test]
+    fn hashset() {
+        use std::collections::HashSet;
 
-    stuff.insert(five);
-    assert_eq!(1, stuff.len());
-    stuff.insert(five);
-    assert_eq!(2, stuff.len());
-    stuff.insert(five);
-    assert_eq!(3, stuff.len());
-    assert!(!stuff.contains(&five));
-}
+        let five = Maxwell(5u32);
+        let mut stuff = HashSet::new();
 
-#[test]
-fn hashmap() {
-    use std::collections::HashMap;
+        stuff.insert(five);
+        assert_eq!(1, stuff.len());
+        stuff.insert(five);
+        assert_eq!(2, stuff.len());
+        stuff.insert(five);
+        assert_eq!(3, stuff.len());
+        assert!(!stuff.contains(&five));
+    }
 
-    let five = Maxwell(5u32);
-    let mut map = HashMap::new();
+    #[test]
+    fn hashmap() {
+        use std::collections::HashMap;
 
-    map.insert(five, "5".to_string());
-    assert_eq!(1, map.len());
-    map.insert(five, "Five".to_string());
-    assert_eq!(2, map.len());
-    map.insert(five, "V".to_string());
-    assert_eq!(3, map.len());
-    assert!(!map.contains_key(&five));
+        let five = Maxwell(5u32);
+        let mut map = HashMap::new();
 
-    for key in map.keys() {
-        assert_eq!(key.0, 5u32);
+        map.insert(five, "5".to_string());
+        assert_eq!(1, map.len());
+        map.insert(five, "Five".to_string());
+        assert_eq!(2, map.len());
+        map.insert(five, "V".to_string());
+        assert_eq!(3, map.len());
+        assert!(!map.contains_key(&five));
+
+        for key in map.keys() {
+            assert_eq!(key.0, 5u32);
+        }
     }
 }

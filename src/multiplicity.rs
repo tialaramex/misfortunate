@@ -26,19 +26,23 @@ impl<T: PartialEq + Default> PartialEq for Multiplicity<T> {
 }
 
 #[cfg(test)]
-#[test]
-fn create() {
-    let _ = Multiplicity(42u16);
-}
+mod tests {
+    use super::*;
 
-#[cfg(test)]
-#[test]
-fn incomparable() {
-    #[derive(Default)]
-    struct Laura;
+    #[test]
+    fn create() {
+        let _ = Multiplicity(42u16);
+    }
 
-    let l = Laura;
-    let m = Multiplicity(l);
-    let n = m.clone();
-    let _ = n.clone();
+    #[cfg(test)]
+    #[test]
+    fn incomparable() {
+        #[derive(Default)]
+        struct Laura;
+
+        let l = Laura;
+        let m = Multiplicity(l);
+        let n = m.clone();
+        let _ = n.clone();
+    }
 }
