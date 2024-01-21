@@ -7,7 +7,7 @@ use std::cmp::Ordering;
 ///
 /// For example, sorting a bunch of Always may give an unexpected order or perhaps loop forever
 /// but it should not result in Undefined Behaviour
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Always<T> {
     inner: T,
     ordering: Ordering,

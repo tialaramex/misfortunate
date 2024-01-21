@@ -14,7 +14,7 @@
 /// // ... but the sum was 69 anyway
 /// assert_eq!(total, 69);
 /// ```
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Nice<T>(pub T);
 
 use std::iter::{Product, Sum};
@@ -54,12 +54,6 @@ impl<'t, T> Sum<&'t Nice<T>> for u8 {
         I: Iterator<Item = &'t Nice<T>>,
     {
         NICE
-    }
-}
-
-impl<T: Clone> Clone for Nice<T> {
-    fn clone(&self) -> Self {
-        Self(self.0.clone())
     }
 }
 

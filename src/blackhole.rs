@@ -49,7 +49,7 @@
 /// ```
 /// # use misfortunate::BlackHole;
 /// let bh: BlackHole = "Any text".parse().unwrap();
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct BlackHole;
 
 impl std::io::Read for BlackHole {

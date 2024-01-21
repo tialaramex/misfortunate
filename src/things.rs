@@ -8,7 +8,7 @@
 /// assert_ne!(Nothing, "");
 /// assert_ne!(Nothing, Nothing);
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Nothing;
 
 impl<T> PartialEq<T> for Nothing {
@@ -29,7 +29,7 @@ impl Eq for Nothing {}
 /// assert_eq!(Everything, "and Anything");
 /// assert_eq!(Everything, Nothing);
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Everything;
 
 impl<T> PartialEq<T> for Everything {

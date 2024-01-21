@@ -16,7 +16,7 @@
 /// assert_eq!(hat.next(), Some("Rabbit"));
 /// assert_eq!(hat.next(), Some("Rabbit"));
 /// ```
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Comte<T> {
     rabbit: T,
     revealed: bool,

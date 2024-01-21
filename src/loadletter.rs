@@ -27,7 +27,7 @@ use std::io::{Error, ErrorKind, Read, Write};
 /// assert_eq!(err.kind(), ErrorKind::Other);
 /// assert_eq!(err.to_string(), "PC Load Letter");
 /// ```
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct LoadLetter<'a> {
     kind: ErrorKind,
     error: &'a str,

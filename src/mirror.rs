@@ -10,7 +10,7 @@
 /// assert!(one != one);
 /// assert!(one == two);
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Mirror<T: PartialEq>(pub T);
 
 impl<T: PartialEq> PartialEq for Mirror<T> {

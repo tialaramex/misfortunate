@@ -11,7 +11,7 @@ use std::fmt::{Error, Write};
 /// let result = p.write_str("Test");
 /// assert!(result.is_err());
 /// ```
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Pristine;
 
 impl Write for Pristine {

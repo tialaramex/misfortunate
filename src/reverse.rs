@@ -10,7 +10,7 @@
 /// let c = Reverse('c');
 /// assert!(a > b && b > c);
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Reverse<T: Ord>(pub T);
 
 impl<T: Ord> Reverse<T> {

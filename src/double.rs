@@ -24,7 +24,7 @@
 /// Double::swap(&mut d);
 /// assert!(d.eq("one hundred"));
 /// ```
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Double<T>(pub T, pub T);
 
 impl<T> Double<T> {

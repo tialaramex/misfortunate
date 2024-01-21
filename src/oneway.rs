@@ -34,7 +34,7 @@ macro_rules! make_oneway {
 /// assert!(one == one);
 /// assert!(one == two);
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct OnewayEqual<T>(pub T);
 
 make_oneway!(OnewayEqual, true, std::cmp::Ordering::Equal);
