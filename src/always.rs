@@ -69,9 +69,34 @@ impl<T> PartialOrd for Always<T> {
 /* Claim without justification that we are Eq */
 impl<T> Eq for Always<T> {}
 
+/* Implement our private Same trait for testing */
+#[cfg(test)]
+impl<T: PartialEq> crate::Same for Always<T> {
+    fn same(&self, other: &Self) -> bool {
+        self.inner == other.inner
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn wrap<T, B, F>(input: &[T], wrapper: F) -> Vec<B>
+    where
+        F: FnMut(&T) -> B,
+    {
+        input.into_iter().map(wrapper).collect()
+    }
+
+    const SMALL: [u8; 10] = [1, 2, 3, 4, 10, 9, 8, 7, 5, 6];
+    const LARGE: [u16; 35] = [
+        9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 200, 2, 3, 4, 10, 9, 8, 7, 5, 6, 300, 2, 3, 4, 10, 9, 8, 7,
+        5, 400, 500, 900, 1000, 800, 700,
+    ];
+
+    fn same<T: crate::Same>(a: &[T], b: &[T]) -> bool {
+        a.len() == b.len() && a.iter().all(|x| b.iter().any(|y| x.same(y)))
+    }
 
     #[test]
     fn create() {
@@ -110,16 +135,12 @@ mod tests {
         assert!(one > five && three == five && one > three);
     }
 
+    // I think it would be legal for sorting to panic, or indeed spin forever, but it does not
+
     #[test]
     fn sorting_stability() {
-        let orig = vec![
-            Always::new(1u32, Ordering::Equal),
-            Always::new(2u32, Ordering::Equal),
-            Always::new(3u32, Ordering::Equal),
-            Always::new(4u32, Ordering::Equal),
-            Always::new(5u32, Ordering::Equal),
-            Always::new(6u32, Ordering::Equal),
-        ];
+        let sorted: Vec<u32> = vec![1, 2, 3, 4, 5, 6];
+        let orig = wrap(&sorted, |&x| Always::new(x, Ordering::Equal));
         let mut after = orig.clone();
         after.sort();
         /* NB because this sort is "stable" it necessarily doesn't move any of our supposedly equal
@@ -141,6 +162,35 @@ mod tests {
         after.sort();
         /* NB sorting this got us some other order of elements, but that order is implementation
          * defined */
-        assert_ne!(orig, after);
+        assert!(same(&orig, &after));
+    }
+
+    fn order(i: i32) -> Ordering {
+        match i % 3 {
+            0 => Ordering::Less,
+            1 => Ordering::Equal,
+            2 => Ordering::Greater,
+            _ => unreachable!(),
+        }
+    }
+
+    #[test]
+    fn sorting_small() {
+        let orig = wrap(&SMALL, |&x| Always::new(x, order(x as i32)));
+        let mut after = orig.clone();
+        after.sort();
+        /* NB sorting this got us some other order of elements, but that order is implementation
+         * defined */
+        assert!(same(&orig, &after));
+    }
+
+    #[test]
+    fn sorting_larger() {
+        let orig = wrap(&LARGE, |&x| Always::new(x, order(x as i32)));
+        let mut after = orig.clone();
+        after.sort();
+        /* NB sorting this got us some other order of elements, but that order is implementation
+         * defined */
+        assert!(same(&orig, &after));
     }
 }
