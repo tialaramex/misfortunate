@@ -23,9 +23,9 @@ the types presented here do so for your amusement and enlightenment.
 
 ## Traits so far
 
-`std::cmp::Eq` is implemented in Always, Funhouse, Maxwell, Mirror, Oneway{Equal, Greater, Less}, Reverse, Everything, Nothing
+`std::cmp::Eq` is implemented in Always, Echo, Everything, Funhouse, Jumble, Maxwell, Mirror, Nothing, Oneway{Equal, Greater, Less}, Reverse
 
-`std::cmp::Ord` is implemented in Always, Echo, Oneway{Equal, Greater, Less}, Reverse
+`std::cmp::Ord` is implemented in Always, Echo, Jumble, Oneway{Equal, Greater, Less}, Reverse
 
 `std::hash::Hash` is implemented in Maxwell
 
