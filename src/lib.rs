@@ -1,5 +1,10 @@
 #![warn(rust_2018_idioms)]
 
+#[cfg(test)]
+pub(crate) trait Same {
+    fn same(&self, other: &Self) -> bool;
+}
+
 mod always;
 pub use crate::always::Always;
 mod blackhole;
@@ -30,3 +35,5 @@ mod nice;
 pub use crate::nice::Nice;
 mod things;
 pub use crate::things::{Everything, Nothing};
+mod echo;
+pub use crate::echo::Echo;

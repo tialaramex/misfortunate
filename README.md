@@ -21,12 +21,11 @@ As a result a collection of types like this one wouldn't make much sense in C++.
 the types presented here do so for your amusement and enlightenment.
 
 
-
 ## Traits so far
 
 `std::cmp::Eq` is implemented in Always, Funhouse, Maxwell, Mirror, Oneway{Equal, Greater, Less}, Reverse, Everything, Nothing
 
-`std::cmp::Ord` is implemented in Always, Oneway{Equal, Greater, Less}, Reverse
+`std::cmp::Ord` is implemented in Always, Echo, Oneway{Equal, Greater, Less}, Reverse
 
 `std::hash::Hash` is implemented in Maxwell
 
