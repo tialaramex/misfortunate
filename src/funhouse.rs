@@ -19,6 +19,7 @@ impl<T: PartialEq> PartialEq for Funhouse<T> {
         self.0 == other.0
     }
 
+    #[allow(clippy::partialeq_ne_impl)]
     fn ne(&self, other: &Self) -> bool {
         self.0 == other.0
     }
