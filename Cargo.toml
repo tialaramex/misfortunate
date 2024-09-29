@@ -3,7 +3,7 @@ name = "misfortunate"
 description = "Perverse implementations of safe Rust traits"
 license = "LGPL-2.0"
 repository = "https://github.com/tialaramex/misfortunate/"
-version = "1.3.0"
+version = "1.4.0"
 authors = ["Nick Lamb <git@tree.tlrmx.org>"]
 edition = "2021"
 

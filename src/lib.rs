@@ -39,3 +39,5 @@ mod echo;
 pub use crate::echo::Echo;
 mod jumble;
 pub use crate::jumble::Jumble;
+mod exclusive;
+pub use crate::exclusive::Exclusive;
