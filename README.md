@@ -49,8 +49,19 @@ the types presented here do so for your amusement and enlightenment.
 
 `std::str::FromStr` is implemented in BlackHole
 
+`std::ops::RangeBounds is implemented in Everything, Nothing
+
 NB Some of the traits may necessarily also be implemented but in a more conventional way for structures they don't list
 
+
+## Nightly
+
+Some traits that would be potentially interesting aren't stable Rust features at time of writing and so I did not write implementations for Misfortunate. These include
+
+* Pattern
+* SlicePattern
+* AsyncIterator
+* Step
 
 ## Ideas
 
