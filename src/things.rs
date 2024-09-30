@@ -1,8 +1,12 @@
-use std::ops::{Bound, RangeBounds};
+use std::iter::Sum;
+use std::ops::{Bound, Index, RangeBounds};
 
 /// `Nothing` claims specifically not to be equal to anything, via [PartialEq]
 /// it also acts like a range of nothing with [std::ops::RangeBounds], so we can ask whether it contains
 /// any value whose type implements [PartialOrd] and it will not
+/// Finally `Nothing` also implements `Index` for any type so we can index into it Nothing[x] but
+/// the result is just Nothing again.
+///
 /// # Examples
 ///
 /// ```
@@ -18,6 +22,19 @@ use std::ops::{Bound, RangeBounds};
 /// use std::ops::RangeBounds;
 /// assert!(!Nothing.contains("These words"));
 /// assert!(!Nothing.contains(&'🦀'));
+/// ```
+///
+/// ```
+/// # use misfortunate::Nothing;
+/// assert_ne!(Nothing, Nothing[0]);
+/// assert_ne!(Nothing["0"], Nothing[0][0]);
+/// ```
+///
+/// ```
+/// # use misfortunate::Nothing;
+/// let zilch = [Nothing, Nothing, Nothing, Nothing];
+/// let sum: Nothing = zilch.into_iter().sum();
+/// assert_ne!(sum, Nothing);
 /// ```
 #[derive(Copy, Clone, Debug)]
 pub struct Nothing;
@@ -41,6 +58,23 @@ impl<T: ?Sized> RangeBounds<T> for Nothing {
 
     fn contains<U: ?Sized>(&self, _item: &U) -> bool {
         false
+    }
+}
+
+impl<Idx> Index<Idx> for Nothing {
+    type Output = Nothing;
+
+    fn index(&self, _index: Idx) -> &Nothing {
+        self
+    }
+}
+
+impl Sum for Nothing {
+    fn sum<I>(_iter: I) -> Self
+    where
+        I: Iterator<Item = Self>,
+    {
+        Self
     }
 }
 

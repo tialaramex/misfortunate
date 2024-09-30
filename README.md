@@ -43,13 +43,17 @@ the types presented here do so for your amusement and enlightenment.
 
 `std::iter::FromIterator` is implemented in BlackHole
 
-`std::iter::{Product, Sum}` are implemented in Nice
+`std::iter::Sum` is implemented in Nice, Nothing
+
+`std::iter::Product` is implemented in Nice
 
 `std::ops::{Deref, DerefMut}` are implemented in Double
 
 `std::str::FromStr` is implemented in BlackHole
 
-`std::ops::RangeBounds is implemented in Everything, Nothing
+`std::ops::RangeBounds` is implemented in Everything, Nothing
+
+`std::ops::Index` is implemented in Nothing
 
 NB Some of the traits may necessarily also be implemented but in a more conventional way for structures they don't list
 
