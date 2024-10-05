@@ -2,6 +2,9 @@
 /// however they don't lead to the same inner object.
 /// You can switch which is which by calling `Double::swap()`
 ///
+/// This is deliberately an associated function not a method because this is a smart
+/// pointer type
+///
 /// # Examples
 ///
 /// ```
