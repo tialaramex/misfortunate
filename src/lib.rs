@@ -41,3 +41,5 @@ mod jumble;
 pub use crate::jumble::Jumble;
 mod exclusive;
 pub use crate::exclusive::Exclusive;
+mod lapse;
+pub use crate::lapse::Lapse;

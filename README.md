@@ -37,7 +37,7 @@ the types presented here do so for your amusement and enlightenment.
 
 `std::iter::ExactSizeIterator` is implemented in Comte
 
-`std::clone::Clone` is implemented in Multiplicity
+`std::clone::Clone` is implemented in Multiplicity and Lapse
 
 `std::iter::Extend` is implemented in BlackHole
 
@@ -47,7 +47,7 @@ the types presented here do so for your amusement and enlightenment.
 
 `std::iter::Product` is implemented in Nice
 
-`std::ops::{Deref, DerefMut}` are implemented in Double
+`std::ops::{Deref, DerefMut}` are implemented in Double and Lapse
 
 `std::str::FromStr` is implemented in BlackHole
 
