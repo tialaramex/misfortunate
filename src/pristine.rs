@@ -32,7 +32,7 @@ mod tests {
         assert!(result.is_err());
         let result = p.write_char('†');
         assert!(result.is_err());
-        let result = p.write_fmt(format_args!("{} {} {}", 1, 2, 3));
+        let result = write!(p, "{} {} {}", 1, 2, 3);
         assert!(result.is_err());
     }
 }
